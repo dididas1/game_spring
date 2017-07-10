@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.persistence.GradeDao">
+	<select id="gradeSelectByALl"  resultType="GradeVo">
+		SELECT rateno, gno, id, good, bad FROM grade
+	</select>
+	
+	<select id="gradeSelectByNo" resultType="GradeVo">
+		SELECT rateno, gno, id, good, bad FROM grade where gno=#{gNo}
+	</select>
+	
+	<select id="gradeSelectByRate" resultType="GradeVo">
+		SELECT gno,sum(good)-sum(bad) as rate FROM grade group by gno
+	</select>
+	
+	<insert id="gradeInsertByGood">
+		INSERT INTO grade (gno, id, good, bad) VALUES(#{gNo}, #{id}, 1, 0 )
+	</insert>
+
+	<insert id="gradeInsertByBad">
+		INSERT INTO grade (gno, id, good, bad) VALUES(#{gNo}, #{id}, 0, 1)
+	</insert>
+</mapper>

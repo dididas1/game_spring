@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.persistence.BoardDao">
+	<insert id="boardCreate">
+		INSERT INTO board(id, btitle, readcount, replycount,
+		regdate, modidate)
+		VALUES(#{id}, #{bTitle}, 0, 0, now(), now())
+	</insert>
+
+	<select id="boardListAll" resultType="BoardVO">
+		SELECT * FROM board
+	</select>
+
+	<select id="boardRead" resultType="BoardVO">
+		SELECT * FROM board where
+		bno=#{bNo}
+	</select>
+
+	<update id="boardUpdate">
+		UPDATE board SET btitle=#{bTitle}
+		WHERE bno=#{bNo};
+	</update>
+
+	<update id="baordUpdatecnt">
+		UPDATE board SET readcount=#{readcount} WHERE
+		bno=#{bNo}
+	</update>
+
+	<delete id="boardDelete">
+		DELETE FROM board WHERE bno=#{bNo}
+	</delete>
+
+	<select id="baordListPage" resultType="BoardVO">
+		SELECT * FROM board
+		where
+		bno>0
+		order by bno desc,regdate desc
+		limit #{page},10
+	</select>
+
+	<select id="boardListCriteria" resultType="BoardVO">
+		SELECT * FROM board
+		where bno>0
+		order by bno desc,regdate desc
+		limit
+		#{pageStart},#{perPageNum}
+	</select>
+
+	<select id="totalCount" resultType="int">
+		select count(bno) from board
+	</select>
+
+</mapper>

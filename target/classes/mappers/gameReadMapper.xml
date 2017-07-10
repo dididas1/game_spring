@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.persistence.GameReadDao">
+	<select id="gameReadSelectByAll" resultType="GameVo">
+		select * from gamedetail
+	</select>
+
+	<select id="gameReadSelectByNo" resultType="GameVo">
+		SELECT * FROM gamedetail where gno=#{gNo}
+	</select>
+	
+	<insert id="gameReadInsert" parameterType="GameVo">
+		INSERT INTO gamedetail (gno, gcomp, category, saleyear, gcontent, downcnt) VALUES(LAST_INSERT_ID(),#{gComp}, #{category}, #{saleYear}, #{gContent}, 0)
+	</insert>
+	
+	<update id="gameReadUpdate"  parameterType="GameVo">
+		UPDATE gamedetail SET gcomp=#{gComp}, category=#{category}, saleyear=#{saleYear}, gcontent=#{gContent} WHERE gno=#{gNo}
+	</update>
+
+</mapper>

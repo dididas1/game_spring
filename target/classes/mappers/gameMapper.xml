@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgit.persistence.GameDao">
+	<select id="gameSelectByAll" resultType="GameVo">
+		select * from game;
+	</select>
+
+	<select id="gameSelectByNo" resultType="GameVo">
+		SELECT * FROM game where gno=#{gNo}
+	</select>
+	
+	<insert id="gameInsert" parameterType="GameVo">
+		insert into game(title,saleprice,discount,issale,`start`,platform,titleimg) values (#{title},#{salePrice},#{discount},#{isSale},#{start},#{platform},#{titleImg})
+	</insert>
+	
+	<update id="gameUpdate"  parameterType="GameVo">
+		UPDATE game SET title=#{title}, saleprice=#{salePrice}, discount=#{discount}, issale=#{isSale}, platform=#{platform}, `start`=#{start}, titleimg=#{titleImg} WHERE gno=#{gNo}
+	</update>
+	
+	<select id="gameCalenderDataSelect" resultType="GameVo">
+		SELECT title,`start` FROM game
+	</select>
+	
+	<select id="totalGameCount" resultType="int">
+		select count(gno) from game
+	</select>
+	
+	<select id="listCriteria" resultType="GameVo">
+		SELECT * FROM game
+		where gno>0
+		order by gno desc,`start` desc
+		limit #{pageStart},#{perPageNum}
+	</select>
+	
+	<insert id="addScreenShot">
+		INSERT INTO screenshot (gno, spath) VALUES(LAST_INSERT_ID(), #{sPath});
+	</insert>
+	
+	<insert id="modiScreenShot">
+		INSERT INTO screenshot (gno, spath) VALUES(#{gNo}, #{sPath});
+	</insert>
+
+	<select id="selectImg">
+		SELECT spath FROM tbl_attach where gno=#{gno}
+	</select>
+	
+</mapper>
